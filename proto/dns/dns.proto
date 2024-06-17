@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+import "google/api/annotations.proto";
+
+package dns;
+
+option go_package = "/dns";
+
+
+service DNSService {
+  rpc SetHostname(SetHostnameRequest) returns (SetHostnameResponse) {
+    option (google.api.http) = {
+      put: "/host"
+      body: "hostname"
+    };
+  }
+  rpc GetDNS(GetDNSRequest) returns (GetDNSResponse) {
+    option (google.api.http) = {
+      get: "/dns"
+    };
+  }
+  rpc AddDNS(AddDNSRequest) returns (AddDNSResponse) {
+    option (google.api.http) = {
+      post: "/dns"
+      body: "dns_server"
+    };
+  }
+  rpc RemoveDNS(RemoveDNSRequest) returns (RemoveDNSResponse) {
+    option (google.api.http) = {
+      put: "/dns"
+      body: "dns_server"
+    };
+  }
+}
+
+message SetHostnameRequest {
+  string hostname = 1;
+}
+
+message SetHostnameResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message GetDNSRequest {}
+
+message GetDNSResponse {
+  repeated string dns_servers = 1;
+}
+
+message AddDNSRequest {
+  string dns_server = 1;
+}
+
+message AddDNSResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message RemoveDNSRequest {
+  string dns_server = 1;
+}
+
+message RemoveDNSResponse {
+  bool success = 1;
+  string message = 2;
+}
